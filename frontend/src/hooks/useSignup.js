@@ -6,16 +6,25 @@ const useSignup = () => {
 	const [loading, setLoading] = useState(false);
 	const { setAuthUser } = useAuthContext();
 
-	const signup = async ({ fullName, username, password, confirmPassword, gender }) => {
+	const signup = async ({ fullName, username, password, confirmPassword, gender, image }) => {
 		const success = handleInputErrors({ fullName, username, password, confirmPassword, gender });
 		if (!success) return;
 
 		setLoading(true);
 		try {
+			const formData = new FormData();
+			formData.append("fullName", fullName);
+			formData.append("username", username);
+			formData.append("password", password);
+			formData.append("confirmPassword", confirmPassword);
+			formData.append("gender", gender);
+			if (image) {
+				formData.append("image", image); 
+			}
+
 			const res = await fetch("/api/auth/signup", {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),
+				body: formData, 
 			});
 
 			const data = await res.json();
