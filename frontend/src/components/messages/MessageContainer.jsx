@@ -30,7 +30,7 @@ const MessageContainer = () => {
 					{typingUsers.includes(selectedConversation._id) && (
 						<p className='text-center text-gray-400'>Typing...</p>
 					)}
-					<MessageInput />
+					<MessageInput receiverId={selectedConversation._id} />
 				</>
 			)}
 		</div>

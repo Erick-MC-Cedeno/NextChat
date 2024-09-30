@@ -3,10 +3,10 @@ import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
 import { useSocketContext } from "../../context/SocketContext";
 
-const MessageInput = () => {
+const MessageInput = ({ receiverId }) => {
 	const [message, setMessage] = useState("");
 	const { loading, sendMessage } = useSendMessage();
-	const { socket } = useSocketContext();
+	const { socket, sendTypingStatus } = useSocketContext();
 	const typingTimeoutRef = useRef(null);
 
 	const handleSubmit = async (e) => {
@@ -14,7 +14,7 @@ const MessageInput = () => {
 		if (!message) return;
 		await sendMessage(message);
 		setMessage("");
-		socket.emit("stopTyping");
+		sendTypingStatus(receiverId, false);
 	};
 
 	const handleKeyDown = (e) => {
@@ -26,14 +26,14 @@ const MessageInput = () => {
 
 	const handleChange = (e) => {
 		setMessage(e.target.value);
-		socket.emit("typing");
+		sendTypingStatus(receiverId, true);
 
 		if (typingTimeoutRef.current) {
 			clearTimeout(typingTimeoutRef.current);
 		}
 
 		typingTimeoutRef.current = setTimeout(() => {
-			socket.emit("stopTyping");
+			sendTypingStatus(receiverId, false);
 		}, 1000); // Adjust the timeout as needed
 	};
 

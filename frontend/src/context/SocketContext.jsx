@@ -45,8 +45,18 @@ export const SocketContextProvider = ({ children }) => {
 		}
 	}, [authUser]);
 
+	const sendTypingStatus = (receiverId, isTyping) => {
+		if (socket) {
+			if (isTyping) {
+				socket.emit("typing", receiverId);
+			} else {
+				socket.emit("stopTyping", receiverId);
+			}
+		}
+	};
+
 	return (
-		<SocketContext.Provider value={{ socket, onlineUsers, typingUsers }}>
+		<SocketContext.Provider value={{ socket, onlineUsers, typingUsers, sendTypingStatus }}>
 			{children}
 		</SocketContext.Provider>
 	);
