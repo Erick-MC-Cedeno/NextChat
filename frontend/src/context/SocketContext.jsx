@@ -11,6 +11,7 @@ export const useSocketContext = () => {
 export const SocketContextProvider = ({ children }) => {
 	const [socket, setSocket] = useState(null);
 	const [onlineUsers, setOnlineUsers] = useState([]);
+	const [typingUsers, setTypingUsers] = useState([]);
 	const { authUser } = useAuthContext();
 
 	useEffect(() => {
@@ -23,9 +24,16 @@ export const SocketContextProvider = ({ children }) => {
 
 			setSocket(socket);
 
-			// socket.on() is used to listen to the events. can be used both on client and server side
 			socket.on("getOnlineUsers", (users) => {
 				setOnlineUsers(users);
+			});
+
+			socket.on("typing", (userId) => {
+				setTypingUsers((prev) => [...prev, userId]);
+			});
+
+			socket.on("stopTyping", (userId) => {
+				setTypingUsers((prev) => prev.filter((id) => id !== userId));
 			});
 
 			return () => socket.close();
@@ -37,5 +45,9 @@ export const SocketContextProvider = ({ children }) => {
 		}
 	}, [authUser]);
 
-	return <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>;
+	return (
+		<SocketContext.Provider value={{ socket, onlineUsers, typingUsers }}>
+			{children}
+		</SocketContext.Provider>
+	);
 };

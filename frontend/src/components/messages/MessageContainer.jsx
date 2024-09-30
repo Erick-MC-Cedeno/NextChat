@@ -4,9 +4,11 @@ import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useAuthContext } from "../../context/AuthContext";
+import { useSocketContext } from "../../context/SocketContext";
 
 const MessageContainer = () => {
 	const { selectedConversation, setSelectedConversation } = useConversation();
+	const { typingUsers } = useSocketContext();
 
 	useEffect(() => {
 		// cleanup function (unmounts)
@@ -25,6 +27,9 @@ const MessageContainer = () => {
 						<span className='text-gray-900 font-bold'>{selectedConversation.fullName}</span>
 					</div>
 					<Messages />
+					{typingUsers.includes(selectedConversation._id) && (
+						<p className='text-center text-gray-400'>Typing...</p>
+					)}
 					<MessageInput />
 				</>
 			)}
@@ -45,24 +50,3 @@ const NoChatSelected = () => {
 		</div>
 	);
 };
-
-// STARTER CODE SNIPPET
-// import MessageInput from "./MessageInput";
-// import Messages from "./Messages";
-
-// const MessageContainer = () => {
-// 	return (
-// 		<div className='md:min-w-[450px] flex flex-col'>
-// 			<>
-// 				{/* Header */}
-// 				<div className='bg-slate-500 px-4 py-2 mb-2'>
-// 					<span className='label-text'>To:</span> <span className='text-gray-900 font-bold'>John doe</span>
-// 				</div>
-
-// 				<Messages />
-// 				<MessageInput />
-// 			</>
-// 		</div>
-// 	);
-// };
-// export default MessageContainer;

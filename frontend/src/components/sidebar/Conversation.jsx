@@ -13,10 +13,11 @@ const bufferToBase64 = (buffer) => {
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
     const { selectedConversation, setSelectedConversation } = useConversation();
+    const { onlineUsers, typingUsers } = useSocketContext();
 
     const isSelected = selectedConversation?._id === conversation._id;
-    const { onlineUsers } = useSocketContext();
     const isOnline = onlineUsers.includes(conversation._id);
+    const isTyping = typingUsers.includes(conversation._id);
 
     // Convertir Buffer a base64
     const profilePicBase64 = conversation.image && conversation.image.data
@@ -42,6 +43,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
                         <p className='font-bold text-gray-200'>{conversation.fullName}</p>
                         <span className='text-xl'>{emoji}</span>
                     </div>
+                    {isTyping && <p className='text-sm text-gray-400'>Typing...</p>}
                 </div>
             </div>
 
