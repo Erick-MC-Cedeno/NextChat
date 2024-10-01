@@ -3,32 +3,30 @@ import { extractTime } from "../../utils/extractTime";
 import useConversation from "../../zustand/useConversation";
 
 const bufferToBase64 = (buffer) => {
-    let binary = '';
     const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
+    return btoa(String.fromCharCode(...bytes));
+};
+
+const getProfilePicBase64 = (userImage) => {
+    if (typeof userImage === 'string') {
+        return `data:image/jpeg;base64,${userImage.split(',')[1]}`;
+    } else if (userImage && userImage.data) {
+        return `data:image/jpeg;base64,${bufferToBase64(userImage.data)}`;
     }
-    return window.btoa(binary);
+    return "default-image-url.png"; 
 };
 
 const Message = ({ message }) => {
     const { authUser } = useAuthContext();
     const { selectedConversation } = useConversation();
+    
     const fromMe = message.senderId === authUser._id;
     const formattedTime = extractTime(message.createdAt);
     const chatClassName = fromMe ? "chat-end" : "chat-start";
-    const profilePicBase64 = fromMe 
-        ? authUser.image && typeof authUser.image === 'string'
-            ? `data:image/jpeg;base64,${authUser.image.split(',')[1]}`
-            : authUser.image && authUser.image.data
-                ? `data:image/jpeg;base64,${bufferToBase64(authUser.image.data)}`
-                : "default-image-url.png" 
-        : selectedConversation?.image && typeof selectedConversation.image === 'string'
-            ? `data:image/jpeg;base64,${selectedConversation.image.split(',')[1]}`
-            : selectedConversation?.image && selectedConversation.image.data
-                ? `data:image/jpeg;base64,${bufferToBase64(selectedConversation.image.data)}`
-                : "default-image-url.png"; 
+
+    const profilePicBase64 = fromMe
+        ? getProfilePicBase64(authUser.image)
+        : getProfilePicBase64(selectedConversation?.image);
 
     const bubbleBgColor = fromMe ? "bg-blue-500" : "";
     const shakeClass = message.shouldShake ? "shake" : "";
@@ -37,11 +35,7 @@ const Message = ({ message }) => {
         <div className={`chat ${chatClassName}`}>
             <div className='chat-image avatar'>
                 <div className='w-10 rounded-full'>
-                    {profilePicBase64 ? (
-                        <img alt='Usuario' src={profilePicBase64} />
-                    ) : (
-                        <img src="default-image-url.png" alt='default user' /> 
-                    )}
+                    <img alt='Usuario' src={profilePicBase64} />
                 </div>
             </div>
             <div

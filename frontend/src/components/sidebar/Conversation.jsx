@@ -1,14 +1,17 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
 
+
 const bufferToBase64 = (buffer) => {
-    let binary = '';
     const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
+    return btoa(String.fromCharCode(...bytes));
+};
+
+const getProfilePicBase64 = (image) => {
+    if (image && image.data) {
+        return `data:image/jpeg;base64,${bufferToBase64(image.data)}`;
     }
-    return window.btoa(binary);
+    return "default-image-url.png"; 
 };
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
@@ -19,17 +22,12 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
     const isOnline = onlineUsers.includes(conversation._id);
     const isTyping = typingUsers.includes(conversation._id);
 
-    // Convertir Buffer a base64
-    const profilePicBase64 = conversation.image && conversation.image.data
-        ? `data:image/jpeg;base64,${bufferToBase64(conversation.image.data)}`
-        : "default-image-url.png"; 
+    const profilePicBase64 = getProfilePicBase64(conversation.image);
 
     return (
         <>
             <div
-                className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
-                ${isSelected ? "bg-sky-500" : ""}
-            `}
+                className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer ${isSelected ? "bg-sky-500" : ""}`}
                 onClick={() => setSelectedConversation(conversation)}
             >
                 <div className={`avatar ${isOnline ? "online" : ""}`}>
