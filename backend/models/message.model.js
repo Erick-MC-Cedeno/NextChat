@@ -16,7 +16,10 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		// createdAt, updatedAt
+		read: { // Campo agregado para indicar si el mensaje ha sido leído
+			type: Boolean,
+			default: false,
+		},
 	},
 	{ timestamps: true }
 );
