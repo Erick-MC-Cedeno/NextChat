@@ -20,13 +20,13 @@ NODE_ENV=...
 
 
 
-### Build the app
+### Start Frontend
 
 ``` frontend
 npm run dev
 ```
 
-### Start the app
+### Start Backend
 
 ```backend
 nodemon server.js
