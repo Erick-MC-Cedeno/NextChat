@@ -12,12 +12,14 @@ NODE_ENV=...
 ### Start Frontend
 
 ``` frontend
+npm install
 npm run dev
 ```
 
 ### Start Backend
 
 ```backend
+npm install
 nodemon server.js
 ```
 
