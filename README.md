@@ -11,10 +11,10 @@ NODE_ENV=...
 
 ### Screenshots
 
-![Screenshot 1](src/assets/screenshots/2024-10-02.png)
-![Screenshot 2](src/assets/screenshots/2024-10-02 (2).png)
-![Screenshot 3](src/assets/screenshots/2024-10-02 (3).png)
-![Screenshot 4](src/assets/screenshots/2024-10-02 (4).png)
+![Screenshot 1](frontend/src/assets/screenshots/2024-10-02.png)
+![Screenshot 2](frontend/src/assets/screenshots/2024-10-02 (2).png)
+![Screenshot 3](frontend/src/assets/screenshots/2024-10-02 (3).png)
+![Screenshot 4](frontend/src/assets/screenshots/2024-10-02 (4).png)
 
 
 ### Build the app
