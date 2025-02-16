@@ -1,4 +1,4 @@
-# NEXTCHAT 
+# NEXTCHAT still in development
 
 
 ## 🛠️ Tecnologías Stack
