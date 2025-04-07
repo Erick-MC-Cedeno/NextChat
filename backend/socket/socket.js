@@ -38,6 +38,26 @@ io.on("connection", (socket) => {
 		}
 	});
 
+	socket.on("markMessageAsRead", async (messageId) => {
+		try {
+			const Message = await import("../models/message.model.js").then(module => module.default);
+			const message = await Message.findById(messageId);
+			
+			if (message) {
+				message.read = true;
+				await message.save();
+				
+				// Notificar al remitente que el mensaje ha sido leído
+				const senderSocketId = getReceiverSocketId(message.senderId);
+				if (senderSocketId) {
+					io.to(senderSocketId).emit("messageRead", messageId);
+				}
+			}
+		} catch (error) {
+			console.error("Error marking message as read:", error);
+		}
+	});
+
 	socket.on("disconnect", () => {
 		delete userSocketMap[userId];
 		io.emit("getOnlineUsers", Object.keys(userSocketMap));
