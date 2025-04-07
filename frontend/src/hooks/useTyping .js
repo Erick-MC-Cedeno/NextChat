@@ -3,12 +3,12 @@ import { useSocketContext } from "../../context/SocketContext";
 
 const useTyping = () => {
     const [typingUser, setTypingUser] = useState(null);
-    const { socket } = useSocketContext(); // Asegúrate de que el socket esté disponible
+    const { socket } = useSocketContext(); 
 
     useEffect(() => {
         if (!socket) return;
 
-        // Escuchar el evento de typing
+        
         const handleTyping = (userId) => {
             setTypingUser(userId);
         };
@@ -20,7 +20,7 @@ const useTyping = () => {
         socket.on("typing", handleTyping);
         socket.on("stopTyping", handleStopTyping);
 
-        // Limpiar el efecto al desmontar
+        
         return () => {
             socket.off("typing", handleTyping);
             socket.off("stopTyping", handleStopTyping);

@@ -28,7 +28,6 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
     const profilePicBase64 = getProfilePicBase64(conversation.image);
     
     useEffect(() => {
-        // Contar mensajes no leídos para esta conversación específica
         const count = messages.filter(msg => 
             !msg.read && 
             msg.senderId === conversation._id

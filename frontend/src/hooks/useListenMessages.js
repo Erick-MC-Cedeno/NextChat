@@ -11,7 +11,7 @@ const useListenMessages = () => {
 
 	useEffect(() => {
 		socket?.on("newMessage", (newMessage) => {
-			// Solo agregar el mensaje si pertenece a la conversación seleccionada actualmente
+			
 			if (selectedConversation && 
 				(newMessage.senderId === selectedConversation._id || 
 				newMessage.receiverId === selectedConversation._id)) {

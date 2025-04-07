@@ -12,7 +12,7 @@ const io = new Server(server, {
 	},
 });
 
-const userSocketMap = {}; // {userId: socketId}
+const userSocketMap = {}; 
 
 export const getReceiverSocketId = (receiverId) => {
 	return userSocketMap[receiverId];
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 				message.read = true;
 				await message.save();
 				
-				// Notificar al remitente que el mensaje ha sido leído
+				
 				const senderSocketId = getReceiverSocketId(message.senderId);
 				if (senderSocketId) {
 					io.to(senderSocketId).emit("messageRead", messageId);

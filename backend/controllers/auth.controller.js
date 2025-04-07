@@ -20,7 +20,6 @@ export const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create entry in the database
         let newUser;
         if (image) {
             newUser = new User({
@@ -41,7 +40,7 @@ export const signup = async (req, res) => {
 
         await newUser.save();
 
-        // Generate JWT token
+        
         generateTokenAndSetCookie(newUser._id, res);
 
         const imageBase64 = newUser.image ? `data:image/jpeg;base64,${newUser.image.toString('base64')}` : null;
@@ -50,7 +49,7 @@ export const signup = async (req, res) => {
             _id: newUser._id,
             fullName: newUser.fullName,
             username: newUser.username,
-            image: imageBase64, // Convertir a Base64 para la respuesta
+            image: imageBase64, 
         });
     } catch (error) {
         console.log("Error in signup controller", error.message);
@@ -80,7 +79,7 @@ export const login = async (req, res) => {
             _id: user._id,
             fullName: user.fullName,
             username: user.username,
-            image: imageBase64, // Enviar imagen como cadena Base64
+            image: imageBase64, 
         });
     } catch (error) {
         console.log("Error in login controller", error.message);

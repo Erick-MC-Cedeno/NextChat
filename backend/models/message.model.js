@@ -16,7 +16,7 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		read: { // Campo agregado para indicar si el mensaje ha sido leído
+		read: { 
 			type: Boolean,
 			default: false,
 		},

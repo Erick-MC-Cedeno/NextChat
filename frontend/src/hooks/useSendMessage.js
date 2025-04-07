@@ -20,7 +20,7 @@ const useSendMessage = () => {
 			const data = await res.json();
 			if (data.error) throw new Error(data.error);
 
-			// Reproducir sonido de notificación al enviar mensaje
+			
 			const sound = new Audio(notificationSound);
 			sound.play();
 

@@ -34,7 +34,7 @@ const MessageInput = ({ receiverId }) => {
 
 		typingTimeoutRef.current = setTimeout(() => {
 			sendTypingStatus(receiverId, false);
-		}, 1000); // Adjust the timeout as needed
+		}, 1000); 
 	};
 
 	useEffect(() => {

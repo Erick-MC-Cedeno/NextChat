@@ -40,7 +40,7 @@ export const SocketContextProvider = ({ children }) => {
             socketInstance.on("newMessage", (message) => {
                 setMessages((prevMessages) => [...prevMessages, message]);
                 
-                // Solo marcar como leído si el usuario está en la conversación con el remitente
+               
                 const isInConversationWithSender = window.location.pathname.includes('/chat') && 
                     window.selectedConversationId === message.senderId;
                     
