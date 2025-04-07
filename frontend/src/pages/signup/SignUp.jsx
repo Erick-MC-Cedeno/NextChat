@@ -53,7 +53,7 @@ const SignUp = () => {
             <div className="w-full max-w-md p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
                 <h1 className="text-3xl font-semibold text-center text-gray-300">
                     <span className="text-black">Sign Up</span> 
-                    <span className="text-blue-500"> NicBlockVault</span>
+                    <span className="text-blue-500"> NextChat</span>
                 </h1>
     
                 <form onSubmit={handleSubmit}>
