@@ -11,8 +11,8 @@ const MessageContainer = () => {
 	const { typingUsers } = useSocketContext();
 
 	useEffect(() => {
-		// cleanup function (unmounts)
-		return () => setSelectedConversation(null);
+		// Mantener la conversación seleccionada al desmontar
+		return () => {};
 	}, [setSelectedConversation]);
 
 	return (
